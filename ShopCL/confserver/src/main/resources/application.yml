@@ -5,6 +5,7 @@ spring:
         git:
           uri: git@github.com:Andrewp52/configs.git
           force-pull: true
+        default-label: master
 
 server:
   port: 8888
