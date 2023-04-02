@@ -4,9 +4,10 @@ spring:
   profiles:
     active: dev
 
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
 
-  config:
-    import: optional:configserver:http://localhost:8888
-  cloud:
-    config:
-      label: master
+server:
+  port: 8761
