@@ -11,6 +11,7 @@
 		<module>accounts</module>
 		<module>kladr</module>
 		<module>dto</module>
+		<module>catalog</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
