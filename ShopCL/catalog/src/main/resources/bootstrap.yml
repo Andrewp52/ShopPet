@@ -16,3 +16,5 @@ spring:
         enabled: true
         serviceId: config
       label: master
+
+

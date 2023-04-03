@@ -1,4 +1,4 @@
-package com.example;
+package com.example.shopcl.catalog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
