@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,7 +27,8 @@ public class Category {
     @ManyToOne
     private Category parent;
 
-
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    private Set<Category> categories;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

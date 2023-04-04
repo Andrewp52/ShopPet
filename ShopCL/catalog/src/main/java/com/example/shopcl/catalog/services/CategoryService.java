@@ -17,11 +17,11 @@ public class CategoryService {
     private final CategoriesRepository repository;
     private final DtoFactory<CategoryDto, Category> dtoFactory;
 
-    public Set<CategoryDto> getRootCategories(){
+    public Set<CategoryDto> getAllCategories(){
         return getChildCategoriesByParentId(null);
     }
     public Set<CategoryDto> getChildCategoriesByParentId(Long parentId){
-        Set<Category> found = repository.findByParentId(parentId).orElseThrow(CategoryNotFoundException::new);
+        Set<Category> found = repository.getByParentId(parentId);
         return found.stream().map(dtoFactory::getDto).collect(Collectors.toSet());
     }
 

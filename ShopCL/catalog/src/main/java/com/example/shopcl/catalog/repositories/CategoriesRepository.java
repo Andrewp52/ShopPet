@@ -9,5 +9,5 @@ import java.util.Set;
 
 @Repository
 public interface CategoriesRepository extends JpaRepository<Category, Long> {
-    Optional<Set<Category>>findByParentId(Long parentId);
+    Set<Category>getByParentId(Long parentId);
 }

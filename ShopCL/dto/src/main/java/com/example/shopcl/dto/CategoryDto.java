@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,7 @@ public class CategoryDto {
     private String name;
     private String description;
 
+    private Set<CategoryDto> children;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
