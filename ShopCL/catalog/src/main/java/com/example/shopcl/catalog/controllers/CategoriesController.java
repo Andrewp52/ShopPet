@@ -15,7 +15,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/categories")
 
 public class CategoriesController implements ICategories{
     private final CategoryService service;

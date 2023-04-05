@@ -24,6 +24,14 @@ public class Category {
     @Column(name = "description")
     private String description;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "categories_products",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Category> products;
+
     @ManyToOne
     private Category parent;
 
