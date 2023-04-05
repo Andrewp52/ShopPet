@@ -17,4 +17,6 @@ spring:
         serviceId: config
       label: master
 
-
+#logging:
+#  level:
+#    org.springframework: debug

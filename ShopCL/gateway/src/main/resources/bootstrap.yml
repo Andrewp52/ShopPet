@@ -16,3 +16,7 @@ spring:
         enabled: true
         serviceId: config
       label: master
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
