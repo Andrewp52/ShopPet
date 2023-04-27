@@ -5,10 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Objects;
@@ -103,5 +100,12 @@ public class FileStorageRepository {
         Path p = Path.of(rootPath, path.replace("../", ""));
         Files.createDirectories(p);
         return Path.of(rootPath).relativize(p).toString();
+    }
+
+    public String moveDirOrRenameFile(String path, String newPath) throws IOException {
+        Path origin = Path.of(rootPath, path);
+        Path moveTo = Path.of(rootPath, newPath);
+        Files.move(origin, moveTo, StandardCopyOption.ATOMIC_MOVE);
+        return Path.of(rootPath).relativize(moveTo).toString();
     }
 }

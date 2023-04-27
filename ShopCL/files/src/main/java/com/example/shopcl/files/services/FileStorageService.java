@@ -34,7 +34,7 @@ public class FileStorageService {
             return "/" + fullPath;
         }
         try {
-            return "/" + repository.saveFile(path, file).replace("\\", "/");
+            return fixPath(repository.saveFile(path, file));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -85,9 +85,22 @@ public class FileStorageService {
 
     public String createDir(String path) {
         try {
-            return "/" + repository.createDir(path).replace("\\", "/");
+            return fixPath(repository.createDir(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public String moveDirOrRenameFile(String path, String newPath) {
+        try {
+            return fixPath(repository.moveDirOrRenameFile(path, newPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String fixPath(String path){
+        return "/" + path.replace("\\", "/");
+    }
+
 }

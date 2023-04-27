@@ -37,6 +37,14 @@ public class FileStorageController {
         return request.getContextPath() + (file.isEmpty() ? createDir(path) : saveFile(path, file));
     }
 
+    @PutMapping("/**")
+    public ResponseEntity<String> moveDirOrRenameFile(HttpServletRequest request, @RequestParam String newPath){
+        String path = getFilePath(request);
+        if(!service.isFileExist(path)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(request.getContextPath() + service.moveDirOrRenameFile(path, newPath));
+    }
     private String saveFile(String path, MultipartFile file) {
         return service.saveFile(path, file);
     }
