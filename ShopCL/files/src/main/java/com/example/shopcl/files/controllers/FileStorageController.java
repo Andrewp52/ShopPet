@@ -45,6 +45,17 @@ public class FileStorageController {
         }
         return ResponseEntity.ok(request.getContextPath() + service.moveDirOrRenameFile(path, newPath));
     }
+
+    @DeleteMapping("/{path}")
+    public void deleteFileOrDirectory(@PathVariable(name = "path", required = true) String path){
+
+    }
+
+    private String getFilePath(HttpServletRequest request){
+        String[] reqPath = request.getRequestURI().split(request.getContextPath() + "/");
+        return reqPath.length > 1 ? reqPath[1] : "";
+    }
+
     private String saveFile(String path, MultipartFile file) {
         return service.saveFile(path, file);
     }
@@ -53,19 +64,7 @@ public class FileStorageController {
         return service.createDir(path);
     }
 
-
-    @DeleteMapping("/{path}")
-    public void deleteFileOrDirectory(@PathVariable(name = "path", required = true) String path){
-
-    }
-
     private List<FileInfoDto> getDirectoryList(String path){
         return service.listDirectory(path);
     }
-
-    private String getFilePath(HttpServletRequest request){
-        String[] reqPath = request.getRequestURI().split(request.getContextPath() + "/");
-        return reqPath.length > 1 ? reqPath[1] : "";
-    }
-
 }
