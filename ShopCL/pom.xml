@@ -12,6 +12,7 @@
 		<module>kladr</module>
 		<module>dto</module>
 		<module>catalog</module>
+		<module>files</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
