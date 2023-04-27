@@ -1,10 +1,10 @@
 package com.example.shopcl.catalog.services;
 
-import com.example.shopcl.catalog.dtofactories.DtoFactory;
 import com.example.shopcl.catalog.entities.Category;
 import com.example.shopcl.catalog.exceptions.CategoryNotFoundException;
 import com.example.shopcl.catalog.repositories.CategoriesRepository;
 import com.example.shopcl.dto.CategoryDto;
+import com.example.shopcl.dto.DtoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,9 @@ public class CategoryService {
     }
     public Set<CategoryDto> getChildCategoriesByParentId(Long parentId){
         Set<Category> found = repository.getByParentId(parentId);
-        return found.stream().map(dtoFactory::getDto).collect(Collectors.toSet());
+        return found.stream()
+                .map(dtoFactory::getDto)
+                .collect(Collectors.toSet());
     }
 
     public CategoryDto getCategoryById(Long id){

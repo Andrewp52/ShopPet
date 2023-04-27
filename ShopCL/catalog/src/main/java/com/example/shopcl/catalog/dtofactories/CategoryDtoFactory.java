@@ -2,6 +2,7 @@ package com.example.shopcl.catalog.dtofactories;
 
 import com.example.shopcl.catalog.entities.Category;
 import com.example.shopcl.dto.CategoryDto;
+import com.example.shopcl.dto.DtoFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -29,6 +30,8 @@ public class CategoryDtoFactory implements DtoFactory<CategoryDto, Category> {
         if(category == null){
             return null;
         }
-        return category.getCategories().stream().map(this::getDto).collect(Collectors.toSet());
+        return category.getCategories().stream()
+                .map(this::getDto)
+                .collect(Collectors.toSet());
     }
 }
