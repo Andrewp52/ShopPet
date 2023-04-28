@@ -20,9 +20,8 @@ public class FileStorageRepository {
         checkRoot();
     }
 
-
     public boolean isFileExist(String path){
-        return Files.exists(Path.of(rootPath, path));
+        return Files.exists(resolvePath(path));
     }
 
     public String saveFile(String path, MultipartFile file) throws IOException {
@@ -42,7 +41,7 @@ public class FileStorageRepository {
     }
 
     public void deleteFile(String path) throws IOException {
-        Files.delete(Path.of(rootPath, path));
+        Files.delete(resolvePath(path));
     }
 
     public void deleteDirectory(String path) throws IOException {
@@ -69,7 +68,7 @@ public class FileStorageRepository {
                 return FileVisitResult.CONTINUE;
             }
         };
-        Path dir = Path.of(rootPath, path);
+        Path dir = resolvePath(path);
         Files.walkFileTree(dir, fv);
     }
 
@@ -80,33 +79,37 @@ public class FileStorageRepository {
     }
 
     public List<File> listDirectory(String path) throws IOException{
-        try (Stream<Path> fs = Files.list(Path.of(rootPath, path))){
+        try (Stream<Path> fs = Files.list(resolvePath(path))){
             return fs.map(Path::toFile).toList();
         }
     }
 
     public boolean isDirectory(String path) {
-        return Files.isDirectory(Path.of(rootPath, path));
+        return Files.isDirectory(resolvePath(path));
     }
 
     public long getFileSize(String path) throws IOException {
-        return Files.size(Path.of(rootPath, path));
+        return Files.size(resolvePath(path));
     }
 
     public String contentType(String path) throws IOException {
-        return Files.probeContentType(Path.of(rootPath, path));
+        return Files.probeContentType(resolvePath(path));
     }
 
     public String createDir(String path) throws IOException {
-        Path p = Path.of(rootPath, path.replace("../", ""));
+        Path p = resolvePath(path.replace("../", ""));
         Files.createDirectories(p);
         return Path.of(rootPath).relativize(p).toString();
     }
 
     public String moveDirOrRenameFile(String path, String newPath) throws IOException {
-        Path origin = Path.of(rootPath, path);
-        Path moveTo = Path.of(rootPath, newPath);
+        Path origin = resolvePath(path);
+        Path moveTo = resolvePath(newPath);
         Files.move(origin, moveTo, StandardCopyOption.ATOMIC_MOVE);
         return Path.of(rootPath).relativize(moveTo).toString();
+    }
+
+    private Path resolvePath(String path){
+        return Path.of(rootPath, path);
     }
 }
