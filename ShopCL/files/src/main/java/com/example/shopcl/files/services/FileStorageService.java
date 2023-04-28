@@ -41,15 +41,16 @@ public class FileStorageService {
     }
 
     public void deleteFile(String path){
-        try {
-            repository.deleteFile(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(this.isDirectory(path)){
+            deleteDirectory(path);
+        } else {
+            try {
+                repository.deleteFile(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
 
-    public void deleteDirectory(String path){
-        repository.deleteDirectory(path);
     }
 
     public boolean isDirectory(String path){
@@ -94,6 +95,14 @@ public class FileStorageService {
     public String moveDirOrRenameFile(String path, String newPath) {
         try {
             return fixPath(repository.moveDirOrRenameFile(path, newPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void deleteDirectory(String path){
+        try {
+            repository.deleteDirectory(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

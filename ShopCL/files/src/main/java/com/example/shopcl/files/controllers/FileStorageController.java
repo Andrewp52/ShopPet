@@ -28,7 +28,6 @@ public class FileStorageController {
                     .body(service.getFile(path));
         }
         return ResponseEntity.notFound().build();
-
     }
 
     @PostMapping("/**")
@@ -46,9 +45,14 @@ public class FileStorageController {
         return ResponseEntity.ok(request.getContextPath() + service.moveDirOrRenameFile(path, newPath));
     }
 
-    @DeleteMapping("/{path}")
-    public void deleteFileOrDirectory(@PathVariable(name = "path", required = true) String path){
-
+    @DeleteMapping("/**")
+    public ResponseEntity<?> deleteFileOrDirectory(HttpServletRequest request){
+        String path = getFilePath(request);
+        if(!service.isFileExist(path)){
+            return ResponseEntity.notFound().build();
+        }
+        service.deleteFile(path);
+        return ResponseEntity.ok().build();
     }
 
     private String getFilePath(HttpServletRequest request){

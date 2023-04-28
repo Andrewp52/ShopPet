@@ -42,10 +42,14 @@ public class FileStorageRepository {
     }
 
     public void deleteFile(String path) throws IOException {
+        Files.delete(Path.of(rootPath, path));
+    }
+
+    public void deleteDirectory(String path) throws IOException {
         FileVisitor<Path> fv = new FileVisitor<>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-                return null;
+                return FileVisitResult.CONTINUE;
             }
 
             @Override
@@ -56,7 +60,7 @@ public class FileStorageRepository {
 
             @Override
             public FileVisitResult visitFileFailed(Path file, IOException exc) {
-                return null;
+                return FileVisitResult.TERMINATE;
             }
 
             @Override
@@ -65,11 +69,8 @@ public class FileStorageRepository {
                 return FileVisitResult.CONTINUE;
             }
         };
-        Files.walkFileTree(Path.of(rootPath, path), fv);
-    }
-
-    public void deleteDirectory(String path){
-
+        Path dir = Path.of(rootPath, path);
+        Files.walkFileTree(dir, fv);
     }
 
     private void checkRoot() throws IOException {
